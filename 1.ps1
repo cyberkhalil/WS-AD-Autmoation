@@ -17,7 +17,6 @@ if (-Not (.\lib\Check_Administrator.ps1)) {
 
 
 # moving files
-{
 $scipts_path = "C:\scripts";
 $current_path = pwd
 if(-Not($current_path.Path -eq $scipts_path)){
@@ -25,7 +24,6 @@ move lib ($scipts_path+"\lib") -Force
 $scripts = Get-ChildItem *.ps1
 foreach ($script in $scripts){
 move $script $scipts_path
-}
 }
 }
 
