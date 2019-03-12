@@ -1,5 +1,6 @@
-## This script will change computer name , give it a static ip 
-## & run another scripts so be aware what you are doing ..
+## This script will change computer name, give it a static ip, remove not administrator users
+## & run another script/s on next login so be aware of what you are doing ..
+## TODO : make it move all scripts to C:\scipts
 
 ## used variables
 $computer_name = "DC01"
@@ -15,7 +16,7 @@ if (-Not (.\Check_Administrator.ps1)) {
 (new-object -comobject wscript.shell).popup("Log out from this user and run this script from administrator account please",0,"Error message")
 }
 
-# To rename computer
+# renaming computer
 Rename-Computer $computer_name
 
 # To give a static ip & dns
@@ -26,7 +27,8 @@ New-NetIPAddress `
 -PrefixLength $Mask_Number #-DefaultGateway $gate_way_ip
 Set-DnsClientServerAddress -InterfaceAlias $Interface_Type -ServerAddresses $DNS_Ip
 
-# To restart computer
-Restart-Computer
+# creating cmd file that will run 2.ps1 on the next login
+echo "PowerShell -File C:\scripts\2.ps1" >> "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autorun.cmd"
 
-# TODO make it auto run script 2
+# restarting computer
+Restart-Computer
