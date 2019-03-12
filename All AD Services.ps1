@@ -1,50 +1,6 @@
-# To rename computer
-$computer_name = "DC01"
-Rename-Computer $computer_name
-
-# To give a static ip & dns
-$IP = "10.10.40.1"
-$Mask_Number = "8"
-$DNS_Ip = $IP
-#1 $gate_way_ip
-
-New-NetIPAddress `
--IPAddress $IP `
--InterfaceAlias "Ethernet" `
--AddressFamily IPv4 `
--PrefixLength $Mask_Number #1 `
-#1 -DefaultGateway $gate_way_ip
-Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses $DNS_Ip
-
-# To restart computer
-Restart-Computer
-
-# To install Active Directory Domain Services
-Install-windowsfeature -name AD-Domain-Services –IncludeManagementTools
-Import-Module ADDSDeployment
-
-
 # To install DHCP
 Install-WindowsFeature DHCP -IncludeManagementTools
 Set-ItemProperty –Path registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\Roles\12 –Name ConfigurationState –Value 2
-
-# To install a new Forest (AD-Domain-Services windowsfeature must be installed)
-Install-ADDSForest `
--CreateDnsDelegation:$false `
--DatabasePath "C:\Windows\NTDS" `
--DomainMode "Win2008" `
--DomainName "ucas.edu" `
--DomainNetbiosName "UCAS" `
--ForestMode "Win2008" `
--InstallDns:$true `
--LogPath "C:\Windows\NTDS" `
--NoRebootOnCompletion:$false `
--SysvolPath "C:\Windows\SYSVOL" `
--Force:$true # the 2 lines below contains the SafeModeAdministratorPassword !!
-
-Ucas!
-Ucas!
-
 
 # Authorize the DHCP server
 Add-DhcpServerInDC -DnsName dc01.ucas.edu
@@ -119,6 +75,49 @@ install-windowsfeature Web-Server
 
 
 <#
+# To rename computer
+$computer_name = "DC01"
+Rename-Computer $computer_name
+
+# To give a static ip & dns
+$IP = "10.10.40.1"
+$Mask_Number = "8"
+$DNS_Ip = $IP
+#1 $gate_way_ip
+
+New-NetIPAddress `
+-IPAddress $IP `
+-InterfaceAlias "Ethernet" `
+-AddressFamily IPv4 `
+-PrefixLength $Mask_Number #1 `
+#1 -DefaultGateway $gate_way_ip
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses $DNS_Ip
+
+# To restart computer
+Restart-Computer
+
+# To install Active Directory Domain Services
+Install-windowsfeature -name AD-Domain-Services –IncludeManagementTools
+Import-Module ADDSDeployment
+
+
+# To install a new Forest (AD-Domain-Services windowsfeature must be installed)
+Install-ADDSForest `
+-CreateDnsDelegation:$false `
+-DatabasePath "C:\Windows\NTDS" `
+-DomainMode "Win2008" `
+-DomainName "ucas.edu" `
+-DomainNetbiosName "UCAS" `
+-ForestMode "Win2008" `
+-InstallDns:$true `
+-LogPath "C:\Windows\NTDS" `
+-NoRebootOnCompletion:$false `
+-SysvolPath "C:\Windows\SYSVOL" `
+-Force:$true # the 2 lines below contains the SafeModeAdministratorPassword !!
+
+Ucas!
+Ucas!
+
 
 
 

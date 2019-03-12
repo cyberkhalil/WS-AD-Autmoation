@@ -1,8 +1,9 @@
 ## This script will install Active Directory Domain Services, Create new forest
 ## & run another script\s on next login so be aware ..
 ## TODO : make it auto run 3.ps1 in the next login..
+##        make an alert if this script started from auto run..
 
-## used variables
+## variables can be parameters
 $Domain_Name = "ucas.edu"
 $Netbios_Name = "UCAS"
 $Domain_Mode = "Win2008" # there is Win2012 too
@@ -11,7 +12,7 @@ $Forest_Mode = "Win2008" # there is Win2012 too
 $Safe_Mode_Pass = "Ucas!"
 
 ## script start
-if (-Not (.\Check_Administrator.ps1)) {
+if (-Not (.\lib\Check_Administrator.ps1)) {
 (new-object -comobject wscript.shell).popup("Log out from this user and run this script from administrator account please",0,"Error message")
 }
 
