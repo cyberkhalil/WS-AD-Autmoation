@@ -1,5 +1,6 @@
 ## This script will change computer name, give it a static ip, remove not administrator users
 ## & run another script/s on next login so be aware of what you are doing ..
+## TODO : remove not administrator users
 
 ## variables can be parameters
 $computer_name = "DC01"
@@ -17,13 +18,19 @@ if (-Not (.\lib\Check_Administrator.ps1)) {
 
 
 # moving files
-$scipts_path = "C:\scripts";
 $current_path = pwd
-if(-Not($current_path.Path -eq $scipts_path)){
-move lib ($scipts_path+"\lib") -Force
-$scripts = Get-ChildItem *.ps1
+$current_path = $current_path.Path;
+
+$scipts_new_path = "C:\scripts";
+if(-Not (test-path C:\scripts)){
+ni $scipts_new_path -ItemType Directory
+}
+
+if(-Not($current_path -eq $scipts_new_path)){
+move ($current_path+"\lib\") ($scipts_new_path+"\lib\") -Force
+$scripts = ls $current_path *.ps1
 foreach ($script in $scripts){
-move $script $scipts_path
+move $script ($scipts_new_path+"\")
 }
 }
 
