@@ -38,3 +38,6 @@ Install-ADDSForest `
 
 # To run 3.ps1 on the next login
 C:\scripts\lib\Start_Next_Script -Script_Name "3.ps1"
+
+# force restarting the computer
+Restart-Computer
