@@ -9,7 +9,7 @@ $Netbios_Name = "UCAS"
 $Domain_Mode = "Win2008" # there is Win2012 too
 $Forest_Mode = "Win2008" # there is Win2012 too
 
-$Safe_Mode_Pass = "Ucas!"
+$Safe_Mode_Pass = ConvertTo-SecureString "Ucas!" -AsPlainText -Force
 
 ## script start
 if (-Not (.\lib\Check_Administrator.ps1)) {
@@ -17,7 +17,7 @@ if (-Not (.\lib\Check_Administrator.ps1)) {
 }
 
 # installing Active Directory Domain Services
-Install-windowsfeature -name AD-Domain-Services –IncludeManagementTools
+Install-windowsfeature -name AD-Domain-Services -IncludeManagementTools
 Import-Module ADDSDeployment
 
 # To install a new Forest (AD-Domain-Services windowsfeature must be installed)
@@ -32,8 +32,5 @@ Install-ADDSForest `
 -LogPath "C:\Windows\NTDS" `
 -NoRebootOnCompletion:$false `
 -SysvolPath "C:\Windows\SYSVOL" `
--Force:$true # the 2 lines below contains the SafeModeAdministratorPassword !!
-
-$Safe_Mode_Pass
-$Safe_Mode_Pass
-
+-Force:$true `
+-SafeModeAdministratorPassword $Safe_Mode_Pass

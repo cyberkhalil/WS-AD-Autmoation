@@ -47,7 +47,7 @@ New-NetIPAddress `
 Set-DnsClientServerAddress -InterfaceAlias $Interface_Type -ServerAddresses $DNS_Ip
 
 # creating cmd file that will run 2.ps1 on the next login
-echo "PowerShell -File C:\scripts\2.ps1" >> "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autorun.cmd"
+Set-Content -Path 'C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd' -Value 'PowerShell -File C:\scripts\2.ps1'
 
 # restarting computer
 Restart-Computer
