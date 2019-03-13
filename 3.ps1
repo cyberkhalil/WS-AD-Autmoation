@@ -8,7 +8,8 @@ $dhcp_scope_StartRange = "10.10.30.1"
 $dhcp_scope_EndRange = "10.10.30.254"
 $dhcp_scope_SubnetMask = "255.255.255.0"
 
-
+$dhcp_dns_domain = "ucas.edu"
+$dhcp_dns_server = "10.10.40.1"
 ## script start
 
 # removing autorun if found
@@ -31,6 +32,5 @@ Add-DhcpServerv4Scope `
 -SubnetMask $dhcp_scope_SubnetMask -State Active
 
 Set-DhcpServerv4OptionValue `
--DnsDomain "ucas.edu" `
--DnsServer "10.10.40.1"
- 
+-DnsDomain $dhcp_dns_domain `
+-DnsServer $dhcp_dns_server;
