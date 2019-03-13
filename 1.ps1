@@ -9,7 +9,6 @@ $IP = "10.10.40.1"
 $Mask_Number = "8"
 $DNS_Ip = $IP
 #$gate_way_ip = "10.10.40.1"
-$Interface_Type = "Ethernet"
 
 ## script start
 if (-Not (.\lib\Check_Administrator.ps1)) {
@@ -40,13 +39,18 @@ move $script ($scipts_new_path+"\")
 # renaming computer
 Rename-Computer $computer_name
 
+# get ipv4 ethernet interface
+$ip_v4_interfaces = Get-NetIPInterface | ? AddressFamily -eq "IPv4" | ? InterfaceAlias -notmatch "Loopback";
+$Ethernet_interface = $ip_v4_interfaces[0];
+
+
 # To give a static ip & dns
 New-NetIPAddress `
 -IPAddress $IP `
--InterfaceAlias $Interface_Type `
+-InterfaceAlias $Ethernet_interface `
 -AddressFamily IPv4 `
 -PrefixLength $Mask_Number #-DefaultGateway $gate_way_ip
-Set-DnsClientServerAddress -InterfaceAlias $Interface_Type -ServerAddresses $DNS_Ip
+Set-DnsClientServerAddress -InterfaceAlias $Ethernet_interface -ServerAddresses $DNS_Ip
 
 # creating cmd file that will run 2.ps1 on the next login
 Set-Content -Path 'C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd' -Value 'PowerShell -File C:\scripts\2.ps1'
