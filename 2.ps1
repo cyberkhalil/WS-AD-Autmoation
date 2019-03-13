@@ -12,9 +12,6 @@ $Forest_Mode = "Win2008" # there is Win2012 too
 $Safe_Mode_Pass = ConvertTo-SecureString "Ucas!" -AsPlainText -Force
 
 ## script start
-if (-Not (.\lib\Check_Administrator.ps1)) {
-(new-object -comobject wscript.shell).popup("Log out from this user and run this script from administrator account please",0,"Error message")
-}
 
 # installing Active Directory Domain Services
 Install-windowsfeature -name AD-Domain-Services -IncludeManagementTools
