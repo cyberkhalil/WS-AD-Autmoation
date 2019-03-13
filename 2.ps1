@@ -1,7 +1,6 @@
 ## This script will install Active Directory Domain Services, Create new forest
 ## & run another script\s on next login so be aware ..
-## TODO : make it auto run 3.ps1 in the next login..
-##        make an alert if this script started from auto run..
+## TODO : make an alert if this script started from auto run..
 
 ## variables can be parameters
 $Domain_Name = "ucas.edu"
@@ -37,3 +36,5 @@ Install-ADDSForest `
 -Force:$true `
 -SafeModeAdministratorPassword $Safe_Mode_Pass
 
+# To run 3.ps1 on the next login
+C:\scripts\lib\Start_Next_Script -Script_Name "3.ps1"

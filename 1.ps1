@@ -1,14 +1,21 @@
 ## This script will change computer name, give it a static ip, remove not administrator users
 ## & run another script/s on next login so be aware of what you are doing ..
-## TODO : remove not administrator users
 
 ## variables can be parameters
+
 $computer_name = "DC01"
 
 $IP = "10.10.40.1"
 $Mask_Number = "8"
 $DNS_Ip = $IP
 #$gate_way_ip = "10.10.40.1"
+
+$auto_login_administrator = $true;
+
+$Administrator_Username = "Administrator";
+$Administrator_Password = "Ucas!";
+
+$auto_run_next_script = $true;
 
 ## script start
 if (-Not (.\lib\Check_Administrator.ps1)) {
@@ -53,13 +60,22 @@ New-NetIPAddress `
 Set-DnsClientServerAddress -InterfaceAlias $Ethernet_interface -ServerAddresses $DNS_Ip
 
 # creating cmd file that will run 2.ps1 on the next login
-Set-Content -Path 'C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd' -Value 'PowerShell -File C:\scripts\2.ps1'
+if ($auto_run_next_script){
+C:\scripts\lib\Start_Next_Script -Script_Name "2.ps1"
+}
 
 # removing not Administrator & Guest users
 $all_not_admin_users= @(Get-WmiObject -Class Win32_UserAccount -Filter  "LocalAccount='True'"| where "name" -ne "Administrator"| where "name" -ne "Guest" | select name);
 $all_not_admin_users.foreach({
 ([ADSI]"WinNT://$env:COMPUTERNAME").delete("user",$_.name);
 });
+
+if ($auto_login_administrator){
+$RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+Set-ItemProperty $RegPath "AutoAdminLogon" -Value "1" -type String 
+Set-ItemProperty $RegPath "DefaultUsername" -Value "$Administrator_Username" -type String 
+Set-ItemProperty $RegPath "DefaultPassword" -Value "$Administrator_Password" -type String
+}
 
 # restarting computer
 Restart-Computer
