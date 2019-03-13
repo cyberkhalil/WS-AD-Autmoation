@@ -41,7 +41,7 @@ Rename-Computer $computer_name
 
 # get ipv4 ethernet interface
 $ip_v4_interfaces = Get-NetIPInterface | ? AddressFamily -eq "IPv4" | ? InterfaceAlias -notmatch "Loopback";
-$Ethernet_interface = $ip_v4_interfaces[0];
+$Ethernet_interface = $ip_v4_interfaces[0].InterfaceAlias;
 
 
 # To give a static ip & dns
