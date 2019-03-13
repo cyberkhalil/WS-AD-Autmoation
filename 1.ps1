@@ -14,6 +14,7 @@ $Interface_Type = "Ethernet"
 ## script start
 if (-Not (.\lib\Check_Administrator.ps1)) {
 (new-object -comobject wscript.shell).popup("Log out from this user and run this script from administrator account please",0,"Error message");
+shutdown -l;
 exit
 }
 
