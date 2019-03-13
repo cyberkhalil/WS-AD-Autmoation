@@ -49,5 +49,11 @@ Set-DnsClientServerAddress -InterfaceAlias $Interface_Type -ServerAddresses $DNS
 # creating cmd file that will run 2.ps1 on the next login
 Set-Content -Path 'C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd' -Value 'PowerShell -File C:\scripts\2.ps1'
 
+# removing not Administrator & Guest users
+$all_not_admin_users= @(Get-WmiObject -Class Win32_UserAccount -Filter  "LocalAccount='True'"| where "name" -ne "Administrator"| where "name" -ne "Guest" | select name);
+$all_not_admin_users.foreach({
+([ADSI]"WinNT://$env:COMPUTERNAME").delete("user",$_.name);
+});
+
 # restarting computer
 Restart-Computer
