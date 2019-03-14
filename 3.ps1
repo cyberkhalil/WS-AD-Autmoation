@@ -19,7 +19,7 @@ rm "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
 
 # To install DHCP
 Install-WindowsFeature DHCP -IncludeManagementTools
-Set-ItemProperty –Path registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\Roles\12 –Name ConfigurationState –Value 2
+Set-ItemProperty -Path registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\Roles\12 -Name ConfigurationState -Value 2
 
 # Authorize the DHCP server
 Add-DhcpServerInDC -DnsName dc01.ucas.edu

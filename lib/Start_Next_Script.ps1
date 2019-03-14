@@ -7,4 +7,3 @@ param([string]$Script_Name)
 Set-Content `
  -Path 'C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd' `
  -Value ("Powershell -File c:/scripts/"+$Script_Name)
- 
