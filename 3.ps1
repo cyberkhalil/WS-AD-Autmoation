@@ -39,3 +39,5 @@ function install_dhcp {
 
 # call the function
 install_dhcp
+
+.\4.ps1

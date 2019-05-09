@@ -13,10 +13,11 @@ function install_active_directory {
     [string]$Netbios_Name = "UCAS",
     [string]$Domain_Mode = "Win2008",# can be Win2012 too
     [string]$Forest_Mode = "Win2008",# can be Win2012 too
-    [bool]$auto_run_next_script = $true,
-    [string]$password = "Ucas!"
+    [string]$safe_mode_password = "Ucas!",
+    
+    [bool]$auto_run_next_script = $true
   )
-  $Safe_Mode_Pass = ConvertTo-SecureString $password -AsPlainText -Force
+  $Safe_Mode_Pass = ConvertTo-SecureString $safe_mode_password -AsPlainText -Force
 
   # installing Active Directory Domain Services
   Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools

@@ -1,7 +1,3 @@
-##*=============================================================================================================================================
-##* DEFINITIONS
-##*=============================================================================================================================================
-
 # Interface Definition
 [void][System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 [void][System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
@@ -16,11 +12,6 @@ public static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
 $consolePtr = [Console.Window]::GetConsoleWindow()
 [Console.Window]::ShowWindow($consolePtr,0)
 
-
-##*=============================================================================================================================================
-##* MAIN FORM
-##*=============================================================================================================================================
-
 # Main Form Definition
 $MainForm = New-Object System.Windows.Forms.Form
 $MainForm.ClientSize = New-Object System.Drawing.Size (200,100)
@@ -30,11 +21,6 @@ $MainForm.MaximizeBox = $false
 $MainForm.MinimizeBox = $false
 $MainForm.StartPosition = "CenterScreen"
 $MainForm.Text = "The Final Countdown"
-
-
-##*=============================================================================================================================================
-##* DISPLAY COUNTDOWN
-##*=============================================================================================================================================
 
 # TimeRemaining Label
 $TimeRemaining_Label = New-Object System.Windows.Forms.Label
@@ -66,11 +52,6 @@ $timer.Start()
 $MainForm.Controls.Add($TimeRemaining_Label)
 $MainForm.Controls.Add($Countdown_Label)
 
-
-##*=============================================================================================================================================
-##* FUNCTIONS
-##*=============================================================================================================================================
-
 function Main {
   param(
     [string]$Title = "abc"
@@ -93,9 +74,5 @@ function Action_After_End {
   $MainForm.close()
 }
 
-
-##*=============================================================================================================================================
-##* CALL MAIN FUNCTION
-##*=============================================================================================================================================
 
 Main

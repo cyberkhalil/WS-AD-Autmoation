@@ -1,16 +1,19 @@
-## This script will change computer name, give it a static ip, remove not administrator users
-## & run another script/s on next login so be aware of what you are doing ..
+## This script will change computer name, give it a static ip, remove not administrator
+## users & run another script/s on next login so be aware of what you are doing ..
 function rename_and_set_ip {
   param(
     [string]$computer_name = "DC01",
+    [string]$Administrator_Username = "Administrator",
+    [string]$Administrator_Password = "Ucas!",
+    
     [string]$IP = "10.10.40.1",
     [string]$Mask_Number = "8",
     [string]$DNS_Ip = $IP,
     #$gate_way_ip = "10.10.40.1"
+    
     [bool]$auto_login_administrator = $true,
-    [string]$Administrator_Username = "Administrator",
-    [string]$Administrator_Password = "Ucas!",
-    [bool]$auto_run_next_script = $true
+    [bool]$auto_run_next_script = $true,
+    [string]$scipts_new_path = "C:\scripts"
   )
   ## script start
   if (-not (.\lib\Check_Administrator.ps1)) {
@@ -23,8 +26,6 @@ function rename_and_set_ip {
   # moving files
   $current_path = Get-Location
   $current_path = $current_path.Path;
-
-  $scipts_new_path = "C:\scripts";
   if (-not (Test-Path C:\scripts)) {
     New-Item $scipts_new_path -ItemType Directory
   }
