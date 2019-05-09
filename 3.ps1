@@ -36,5 +36,6 @@ function install_dhcp {
      -DnsDomain $dhcp_dns_domain `
      -DnsServer $dhcp_dns_server;
 }
+
 # call the function
 install_dhcp

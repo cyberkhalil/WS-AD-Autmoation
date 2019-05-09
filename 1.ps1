@@ -54,11 +54,6 @@ function rename_and_set_ip {
      -PrefixLength $Mask_Number #-DefaultGateway $gate_way_ip
   Set-DnsClientServerAddress -InterfaceAlias $Ethernet_interface -ServerAddresses $DNS_Ip
 
-  # creating cmd file that will run 2.ps1 on the next login
-  if ($auto_run_next_script) {
-    C:\scripts\lib\Start_Next_Script -Script_Name "2.ps1"
-  }
-
   # removing not Administrator & Guest users
   $all_not_admin_users = @(Get-WmiObject -Class Win32_UserAccount -Filter "LocalAccount='True'" | Where-Object "name" -NE "Administrator" | Where-Object "name" -NE "Guest" | Select-Object name);
   $all_not_admin_users.ForEach({
@@ -71,15 +66,15 @@ function rename_and_set_ip {
     Set-ItemProperty $RegPath "DefaultUsername" -Value "$Administrator_Username" -Type String
     Set-ItemProperty $RegPath "DefaultPassword" -Value "$Administrator_Password" -Type String
   }
+
+  # creating cmd file that will run 2.ps1 on the next login
+  if ($auto_run_next_script) {
+    C:\scripts\lib\Start_Next_Script -Script_Name "2.ps1"
+  }
 }
 
 # call the function
 rename_and_set_ip
-
-# creating cmd file that will run 2.ps1 on the next login
-if ($auto_run_next_script) {
-  C:\scripts\lib\Start_Next_Script -Script_Name "2.ps1"
-}
 
 # restarting computer
 Restart-Computer

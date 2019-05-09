@@ -36,14 +36,15 @@ function install_active_directory {
      -SysvolPath "C:\Windows\SYSVOL" `
      -Force:$true `
      -SafeModeAdministratorPassword $Safe_Mode_Pass
+
+  # To run 3.ps1 on the next login
+  if ($auto_run_next_script) {
+    C:\scripts\lib\Start_Next_Script -Script_Name "3.ps1"
+  }
+
 }
 # call the function
 install_active_directory
-
-# To run 3.ps1 on the next login
-if ($auto_run_next_script) {
-  C:\scripts\lib\Start_Next_Script -Script_Name "3.ps1"
-}
 
 # force restarting the computer
 Restart-Computer
