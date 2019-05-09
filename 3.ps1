@@ -13,8 +13,8 @@ $dhcp_dns_server = "10.10.40.1"
 ## script start
 
 # removing autorun if found
-if (Test-Path "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd"){
-rm "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd"
+if (Test-Path "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd") {
+  rm "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\autostart.cmd"
 }
 
 # To install DHCP
@@ -26,11 +26,11 @@ Add-DhcpServerInDC -DnsName dc01.ucas.edu
 
 # To create a new DHCP scope
 Add-DhcpServerv4Scope `
--name $dhcp_scope_name `
--StartRange $dhcp_scope_StartRange `
--EndRange $dhcp_scope_EndRange `
--SubnetMask $dhcp_scope_SubnetMask -State Active
+   -Name $dhcp_scope_name `
+   -StartRange $dhcp_scope_StartRange `
+   -EndRange $dhcp_scope_EndRange `
+   -SubnetMask $dhcp_scope_SubnetMask -State Active
 
 Set-DhcpServerv4OptionValue `
--DnsDomain $dhcp_dns_domain `
--DnsServer $dhcp_dns_server;
+   -DnsDomain $dhcp_dns_domain `
+   -DnsServer $dhcp_dns_server;
