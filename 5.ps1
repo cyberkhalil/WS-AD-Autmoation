@@ -1,4 +1,4 @@
-﻿## This script will configure file service , create some files and directorie , share them
+## This script will configure file service , create some files and directorie , share them
 ## & maybe run another script\s on next login so be aware ..
 
 $shared_path = "C:\shared"
@@ -67,3 +67,13 @@ Remove-Permission -StartingDir $managers_path -UserOrGroup "Users" -All $true
 Remove-Permission -StartingDir $tech_path -UserOrGroup "Users" -All $true
 Set-Permission -StartingDir $managers_path -UserOrGroup "Managers" -AclRightsToAssign "Modify"
 Set-Permission -StartingDir $tech_path -UserOrGroup "Tech" -AclRightsToAssign "Modify"
+
+# remove inheritance option for tech folder
+$tech_acl = Get-ACL -Path $tech_path
+$tech_acl.SetAccessRuleProtection($True, $True)
+Set-Acl -Path $tech_path -AclObject $tech_acl
+
+# remove inheritance option for managers folder
+$managers_acl = Get-ACL -Path $managers_path
+$managers_acl.SetAccessRuleProtection($True, $True)
+Set-Acl -Path $managers_path -AclObject $managers_acl
