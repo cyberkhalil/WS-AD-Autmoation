@@ -69,11 +69,13 @@ Set-Permission -StartingDir $managers_path -UserOrGroup "Managers" -AclRightsToA
 Set-Permission -StartingDir $tech_path -UserOrGroup "Tech" -AclRightsToAssign "Modify"
 
 # remove inheritance option for tech folder
-$tech_acl = Get-ACL -Path $tech_path
-$tech_acl.SetAccessRuleProtection($True, $True)
+$tech_acl = Get-Acl -Path $tech_path
+$tech_acl.SetAccessRuleProtection($True,$True)
 Set-Acl -Path $tech_path -AclObject $tech_acl
 
 # remove inheritance option for managers folder
-$managers_acl = Get-ACL -Path $managers_path
-$managers_acl.SetAccessRuleProtection($True, $True)
+$managers_acl = Get-Acl -Path $managers_path
+$managers_acl.SetAccessRuleProtection($True,$True)
 Set-Acl -Path $managers_path -AclObject $managers_acl
+
+.\6.ps1
