@@ -1,8 +1,12 @@
 ## This script will configure the group policies.
 
-# import firefox admin template
-Move-Item ("C:\scripts\lib\Firefox\") ("C:\Windows\PolicyDefinitions") -Force
-Remove-Item ("C:\scripts\lib\Firefox")
+# import firefox administrative template
+Move-Item ("C:\scripts\lib\Firefox\*") ("C:\Windows\PolicyDefinitions") -Force
+Remove-Item ("C:\scripts\lib\Firefox") -Recurse -Force
+
+# import chrome administrative template
+Move-Item ("C:\scripts\lib\Chrome\*") ("C:\Windows\PolicyDefinitions") -Force
+Remove-Item ("C:\scripts\lib\Chrome") -Recurse -Force
 
 # commands for listting
 # Get-GPO -all
