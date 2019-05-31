@@ -26,4 +26,4 @@ $Users = Get-ADUser -SearchBase $managers_path -Filter *
 $Group = Get-ADGroup -Identity ("CN=Managers," + $managers_path)
 Add-ADGroupMember -Identity $Group -Members $Users
 
-.\5.ps1
+C:\scripts\5.ps1

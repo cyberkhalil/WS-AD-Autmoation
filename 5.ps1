@@ -78,4 +78,4 @@ $managers_acl = Get-Acl -Path $managers_path
 $managers_acl.SetAccessRuleProtection($True,$True)
 Set-Acl -Path $managers_path -AclObject $managers_acl
 
-.\6.ps1
+C:\scripts\6.ps1

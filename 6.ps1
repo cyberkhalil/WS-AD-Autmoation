@@ -1,8 +1,8 @@
 ## This script will configure the group policies.
 
 # import firefox admin template
-Move-Item (".\lib\Firefox\") ("C:\Windows\PolicyDefinitions") -Force
-Remove-Item (".\lib\Firefox")
+Move-Item ("C:\scripts\lib\Firefox\") ("C:\Windows\PolicyDefinitions") -Force
+Remove-Item ("C:\scripts\lib\Firefox")
 
 # commands for listting
 # Get-GPO -all
@@ -13,11 +13,11 @@ new-gpo -name TechGPO `
 | set-gppermissions -replace -permissionlevel none -targetname "Authenticated Users" -targettype group `
 | set-gppermissions -permissionlevel gpoapply -targetname "Tech" -targettype group
 
-Import-GPO -BackupGpoName TechGPO -Path .\lib\GPO -TargetName TechGPO
+Import-GPO -BackupGpoName TechGPO -Path C:\scripts\lib\GPO -TargetName TechGPO
 
 new-gpo -name ManagersGPO `
 | new-gplink -target "ou=Managers,dc=ucas,dc=edu" `
 | set-gppermissions -replace -permissionlevel none -targetname "Authenticated Users" -targettype group `
 | set-gppermissions -permissionlevel gpoapply -targetname "Managers" -targettype group
 
-Import-GPO -BackupGpoName ManagersGPO -Path .\lib\GPO -TargetName ManagersGPO
+Import-GPO -BackupGpoName ManagersGPO -Path C:\scripts\lib\GPO -TargetName ManagersGPO
